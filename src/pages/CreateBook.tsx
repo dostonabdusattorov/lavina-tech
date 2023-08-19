@@ -37,7 +37,7 @@ export const CreateBook = () => {
   }, [isSuccess]);
 
   unstable_usePrompt({
-    when: isbn.length === 0,
+    when: isbn.length !== 0,
     message: "There is a change. Should we continue?",
   });
 
@@ -51,6 +51,8 @@ export const CreateBook = () => {
     createBook({
       isbn,
     });
+
+    setIsbn("");
   };
 
   const Error = () => {

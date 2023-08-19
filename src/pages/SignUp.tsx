@@ -9,14 +9,23 @@ import {
   Container,
   CircularProgress,
 } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { LockOutlined } from "@mui/icons-material";
 import { useSignUpMutation } from "../store";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { forwardRef, useEffect } from "react";
+
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export function SignUp() {
   const navigate = useNavigate();
-  const [signup, { isLoading, isSuccess, data }] = useSignUpMutation();
+  const [signup, { isLoading, isSuccess, data, isError, error }] =
+    useSignUpMutation();
 
   useEffect(() => {
     if (localStorage.getItem("key")) {
@@ -29,6 +38,7 @@ export function SignUp() {
 
       navigate("/");
     }
+    // @ts-ignore
   }, [isSuccess]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -50,6 +60,11 @@ export function SignUp() {
       key: data.get("key"),
       secret: data.get("secret"),
     });
+  };
+
+  const Error = () => {
+    // @ts-ignore
+    return <Alert severity="error">{error?.data?.message}</Alert>;
   };
 
   return (
@@ -126,6 +141,7 @@ export function SignUp() {
           </Button>
         </Box>
       </Box>
+      {isError && <Error />}
     </Container>
   );
 }

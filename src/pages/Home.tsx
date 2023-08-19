@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllBooksQuery, useGetUserQuery } from "../store";
 import { useEffect } from "react";
 import { Books, Header } from "../components";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 export function Home() {
   const navigate = useNavigate();
@@ -11,6 +11,7 @@ export function Home() {
     if (!localStorage.getItem("key")) {
       navigate("/signup");
     }
+    // @ts-ignore
   }, []);
   const { data: userData } = useGetUserQuery("");
   const { data: books, isLoading: isBooksLoading } = useGetAllBooksQuery("");
@@ -34,8 +35,17 @@ export function Home() {
               marginTop: 15,
             }}
           />
-        ) : (
+        ) : books?.data && books?.data.length > 0 ? (
           <Books books={books?.data} />
+        ) : (
+          <Typography
+            sx={{ marginTop: 20 }}
+            alignItems={"center"}
+            variant="h6"
+            noWrap
+          >
+            There is no book
+          </Typography>
         )}
       </Box>
     </main>

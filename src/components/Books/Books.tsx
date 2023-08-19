@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { FC } from "react";
 import { BookItem } from "./Book";
 
@@ -22,6 +22,8 @@ interface Props {
 }
 
 export const Books: FC<Props> = ({ books }) => {
+  console.log(books);
+
   return (
     <Box
       sx={{
@@ -43,11 +45,6 @@ export const Books: FC<Props> = ({ books }) => {
       >
         {books &&
           books?.map((book) => <BookItem key={book.book.id} book={book} />)}
-        {!books && (
-          <Typography alignItems={"center"} variant="h6" noWrap>
-            There is no book
-          </Typography>
-        )}
       </Box>
     </Box>
   );
