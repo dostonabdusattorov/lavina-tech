@@ -28,7 +28,7 @@ export function Home() {
     isLoading: isSearchBooksLoading,
     isSuccess: isSearchBooksSuccess,
   } = useGetSearchBooksQuery(search.trim(), {
-    skip: search.length === 0,
+    skip: search?.length === 0,
   });
 
   useEffect(() => {
@@ -73,7 +73,7 @@ export function Home() {
               marginTop: 15,
             }}
           />
-        ) : renderedBooks.books.length > 0 ? (
+        ) : renderedBooks?.books?.length > 0 ? (
           <Books
             isSearched={renderedBooks.isSearched}
             books={renderedBooks.books}
