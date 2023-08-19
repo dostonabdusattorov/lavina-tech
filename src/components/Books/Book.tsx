@@ -53,31 +53,21 @@ export const BookItem: FC<Props> = ({ book }) => {
       />
       <CardContent sx={{ width: 400 }}>
         <Typography gutterBottom variant="h5" component="h2">
-          {book.book.title.length === 0 && "Raspberry Pi User Guide"}
+          {book.book.title}
         </Typography>
         <Box sx={{ width: 400, display: "flex", gap: 2 }}>
           Author:{" "}
-          <Typography sx={{ fontWeight: 700 }}>
-            {book.book.author.length === 0 && "Eben Upton"}
-          </Typography>
+          <Typography sx={{ fontWeight: 700 }}>{book.book.author}</Typography>
         </Box>
         <Box sx={{ width: 400, display: "flex", gap: 2 }}>
           Published:{" "}
           <Typography sx={{ fontWeight: 700 }}>
-            {book.book.published === 0 && 2012}
+            {book.book.published}
           </Typography>
         </Box>
         <Box sx={{ width: 400, display: "flex", gap: 2 }}>
           Pages:{" "}
-          <Typography sx={{ fontWeight: 700 }}>
-            {book.book.pages === 0 && 221}
-          </Typography>
-        </Box>
-        <Box sx={{ width: 400, display: "flex", gap: 2 }}>
-          Cover:{" "}
-          <Typography sx={{ fontWeight: 700 }}>
-            {book.book.cover.length === 0 && "http://url.to.book.cover"}
-          </Typography>
+          <Typography sx={{ fontWeight: 700 }}>{book.book.pages}</Typography>
         </Box>
         <Box sx={{ width: 400, display: "flex", gap: 2 }}>
           Status:{" "}

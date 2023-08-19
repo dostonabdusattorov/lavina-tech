@@ -23,13 +23,20 @@ interface Props {
 
 export const Books: FC<Props> = ({ books }) => {
   return (
-    <>
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
           flexWrap: "wrap",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "start",
           gap: 1,
           padding: 10,
         }}
@@ -42,6 +49,6 @@ export const Books: FC<Props> = ({ books }) => {
           </Typography>
         )}
       </Box>
-    </>
+    </Box>
   );
 };

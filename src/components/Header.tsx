@@ -9,19 +9,13 @@ import {
 import { Person } from "@mui/icons-material";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CreateBookModal } from "./CreateBookModal";
 
 interface Props {
   name: string;
 }
 
 export const Header: FC<Props> = ({ name }) => {
-  const [open, setOpen] = useState(false);
-
   const navigate = useNavigate();
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const handleSignOut = (): void => {
     localStorage.removeItem("key");
@@ -51,8 +45,10 @@ export const Header: FC<Props> = ({ name }) => {
             color="inherit"
             noWrap
           >
-            <Person sx={{ mr: 2 }} />
-            {name ? name : ""}
+            <div onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+              <Person sx={{ mr: 2 }} />
+              {name ? name : ""}
+            </div>
           </Typography>
           <Box
             sx={{
@@ -62,13 +58,16 @@ export const Header: FC<Props> = ({ name }) => {
               gap: 2,
             }}
           >
-            <Button onClick={handleOpen} variant="contained" color="success">
+            <Button
+              onClick={() => navigate("/create-book")}
+              variant="contained"
+              color="success"
+            >
               Create Book
             </Button>
             <Button onClick={handleSignOut} variant="contained" color="error">
               Sign out
             </Button>
-            <CreateBookModal open={open} handleClose={handleClose} />
           </Box>
         </Toolbar>
       </AppBar>
