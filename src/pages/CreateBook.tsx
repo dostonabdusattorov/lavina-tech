@@ -5,10 +5,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useCreateBookMutation, useGetUserQuery } from "../store";
 import { Header } from "../components";
 import { unstable_usePrompt, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -22,6 +23,13 @@ const style = {
   p: 4,
 };
 
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export const CreateBook = () => {
   const navigate = useNavigate();
   const [createBook, { isLoading, isSuccess, isError, error }] =
@@ -29,11 +37,11 @@ export const CreateBook = () => {
   const { data: userData } = useGetUserQuery("");
   const [isbn, setIsbn] = useState("");
 
-  // @ts-ignore
   useEffect(() => {
     if (isSuccess) {
       navigate("/");
     }
+    // @ts-ignore
   }, [isSuccess]);
 
   unstable_usePrompt({
@@ -57,7 +65,7 @@ export const CreateBook = () => {
 
   const Error = () => {
     // @ts-ignore
-    return <span style={{ color: "red" }}>{`${error?.data?.message}`}</span>;
+    return <Alert severity="error">{`${error?.data?.message}`}</Alert>;
   };
 
   return (

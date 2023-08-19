@@ -3,13 +3,13 @@ import { FC } from "react";
 import { BookItem } from "./Book";
 
 interface BookData {
-  id: number;
-  isbn: string;
-  title: string;
-  cover: string;
-  author: string;
-  published: number;
-  pages: number;
+  id?: number;
+  isbn?: string;
+  title?: string;
+  cover?: string;
+  author?: string;
+  published?: number;
+  pages?: number;
 }
 
 export interface Book {
@@ -18,12 +18,11 @@ export interface Book {
 }
 
 interface Props {
+  isSearched: boolean;
   books: Book[];
 }
 
-export const Books: FC<Props> = ({ books }) => {
-  console.log(books);
-
+export const Books: FC<Props> = ({ books, isSearched }) => {
   return (
     <Box
       sx={{
@@ -44,7 +43,13 @@ export const Books: FC<Props> = ({ books }) => {
         }}
       >
         {books &&
-          books?.map((book) => <BookItem key={book.book.id} book={book} />)}
+          books?.map((book) => (
+            <BookItem
+              isSearched={isSearched}
+              key={book?.book?.id}
+              book={book}
+            />
+          ))}
       </Box>
     </Box>
   );

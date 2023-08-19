@@ -38,6 +38,24 @@ export const bookshelfApi = createApi({
       },
       providesTags: ["books"],
     }),
+    getSearchBooks: builder.query({
+      query: (search) => {
+        const Hash = md5Hash(
+          "GET",
+          `/books/${search}`,
+          "",
+          localStorage.getItem("secret")
+        );
+
+        return {
+          url: `/books/${search}`,
+          headers: {
+            Sign: Hash,
+          },
+        };
+      },
+      providesTags: ["books"],
+    }),
     getUser: builder.query({
       query: () => {
         const Hash = md5Hash(
@@ -126,6 +144,7 @@ export const bookshelfApi = createApi({
 export const {
   useGetAllBooksQuery,
   useGetUserQuery,
+  useGetSearchBooksQuery,
   useSignUpMutation,
   useCreateBookMutation,
   useDeleteBookMutation,

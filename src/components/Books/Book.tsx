@@ -18,10 +18,11 @@ import { Book } from "./Books";
 import { useDeleteBookMutation, useEditBookMutation } from "../../store";
 
 interface Props {
+  isSearched: boolean;
   book: Book;
 }
 
-export const BookItem: FC<Props> = ({ book }) => {
+export const BookItem: FC<Props> = ({ book, isSearched }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
@@ -60,7 +61,7 @@ export const BookItem: FC<Props> = ({ book }) => {
   ]);
 
   const submitEdit = () => {
-    editBook({ id: book.book.id, body: { status } });
+    editBook({ id: book?.book?.id, body: { status } });
     setIsEditing(false);
   };
   return (
@@ -98,32 +99,36 @@ export const BookItem: FC<Props> = ({ book }) => {
             // 16:9
             pt: "56.25%",
           }}
-          image={book.book.cover}
+          image={book?.book?.cover}
         />
         <CardContent sx={{ width: 400 }}>
           <Typography gutterBottom variant="h5" component="h2">
-            {book.book.title}
+            {book?.book?.title}
           </Typography>
           <Box sx={{ width: 400, display: "flex", gap: 2 }}>
             Author:{" "}
-            <Typography sx={{ fontWeight: 700 }}>{book.book.author}</Typography>
+            <Typography sx={{ fontWeight: 700 }}>
+              {book?.book?.author}
+            </Typography>
           </Box>
           <Box sx={{ width: 400, display: "flex", gap: 2 }}>
             Published:{" "}
             <Typography sx={{ fontWeight: 700 }}>
-              {book.book.published}
+              {book?.book?.published}
             </Typography>
           </Box>
           <Box sx={{ width: 400, display: "flex", gap: 2 }}>
             Pages:{" "}
-            <Typography sx={{ fontWeight: 700 }}>{book.book.pages}</Typography>
+            <Typography sx={{ fontWeight: 700 }}>
+              {book?.book?.pages}
+            </Typography>
           </Box>
           <Box sx={{ width: 400, display: "flex", gap: 2 }}>
             Status:{" "}
             <Typography sx={{ fontWeight: 700 }}>
-              {book.status === 0
+              {book?.status === 0
                 ? "New"
-                : book.status === 1
+                : book?.status === 1
                 ? "Reading"
                 : "Finished"}
             </Typography>
@@ -136,6 +141,7 @@ export const BookItem: FC<Props> = ({ book }) => {
               variant="contained"
               color="success"
               size="small"
+              disabled={isSearched}
             >
               Edit
             </Button>
@@ -166,9 +172,9 @@ export const BookItem: FC<Props> = ({ book }) => {
           )}
           <Button
             onClick={() => {
-              deleteBook(book.book.id);
+              deleteBook(book?.book?.id);
             }}
-            disabled={isBookDeleting}
+            disabled={isBookDeleting || isSearched}
             variant="contained"
             color="error"
             size="small"
